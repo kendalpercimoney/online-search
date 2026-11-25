@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#15152a">
+  <title>Online Search</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <header class="topbar glass">
+    <a class="brand" href="#/" title="Home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Online Search</span>
+    </a>
+    <form id="searchForm" class="search" role="search" autocomplete="off">
+      <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+      <input id="search" type="search" placeholder="Search footage" aria-label="Search footage" spellcheck="false">
+      <kbd class="search-hint" aria-hidden="true">⌘F</kbd>
+    </form>
+    <div class="topbar-actions">
+      <button id="openLink" class="icon-btn" title="Open a Drive folder link" aria-label="Open a Drive folder link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
+      <button id="openSettings" class="icon-btn" title="Settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="content">
+    <section id="welcome" class="welcome">
+      <div class="welcome-card glass">
+        <img class="welcome-icon" src="icon.png" alt="">
+        <h1>Online Search</h1>
+        <p class="welcome-by">by Percimoney Technologies</p>
+        <p class="welcome-text">Skim, play and search the video footage in your Google Drive.</p>
+        <button id="welcomeSignIn" class="pill primary large">Sign in with Google</button>
+        <p id="welcomeMessage" class="welcome-message" role="status"></p>
+      </div>
+    </section>
+
+    <div class="bar">
+      <nav id="crumbs" class="crumbs" aria-label="Location"></nav>
+      <div id="scope" class="segmented" role="group" aria-label="Search scope"></div>
+      <div id="status" class="status" role="status"></div>
+      <div class="bar-actions">
+        <span id="modelStatus" class="note"></span>
+        <span id="catalogStatus" class="note"></span>
+        <span id="catalogControls" class="catalog-controls" hidden>
+          <label class="check"><input id="catalogRecursive" type="checkbox"> Include subfolders</label>
+          <button id="catalogBtn" class="pill">Catalog folder</button>
+        </span>
+        <button id="catalogStop" class="pill" hidden>Stop</button>
+      </div>
+    </div>
+
+    <div id="tiles" class="tiles"></div>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <dialog id="linkDialog" class="sheet small glass-strong">
+    <form id="linkForm" class="link-form">
+      <h2>Open a Drive folder</h2>
+      <input id="linkInput" placeholder="Paste a folder link or ID" aria-label="Drive folder link">
+      <button class="pill primary">Open</button>
+    </form>
+  </dialog>
+
+  <dialog id="settings" class="sheet glass-strong">
+    <div class="sheet-head">
+      <h2>Settings</h2>
+      <button id="closeSettings" class="icon-btn round" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+
+    <h3 class="group-title">Account</h3>
+    <div class="group">
+      <div class="row account">
+        <span id="accountAvatar" class="avatar">?</span>
+        <div class="row-text"><div id="accountName"></div><div id="accountDetail" class="muted"></div></div>
+        <button id="signIn" class="pill primary">Sign in with Google</button>
+        <button id="signOut" class="pill">Sign out</button>
+      </div>
+    </div>
+    <p id="settingsMessage" class="settings-message" role="status"></p>
+
+    <h3 class="group-title">Appearance</h3>
+    <div class="group">
+      <div class="row column">
+        <div class="row-label">Background</div>
+        <div id="backgrounds" class="backgrounds"></div>
+      </div>
+      <div class="row column">
+        <div class="row-label">Glass</div>
+        <div class="slider-row"><span class="muted">Clear</span><input id="glass" type="range" min="0" max="100" aria-label="Glass strength"><span class="muted">Frosted</span></div>
+      </div>
+    </div>
+
+    <h3 class="group-title">Previews</h3>
+    <div class="group">
+      <label class="row">
+        <div class="row-text"><div>Prepare previews in the background</div><div class="muted">Hover-scrub is ready sooner, but previews download for every clip on screen.</div></div>
+        <input id="prepareInBackground" type="checkbox" class="switch">
+      </label>
+      <div class="row">
+        <div class="row-text"><div>Saved hover previews</div><div id="cacheDetail" class="muted">Kept on this computer so folders scrub instantly.</div></div>
+        <button id="clearCache" class="pill">Clear</button>
+      </div>
+    </div>
+
+    <section id="updatesSection" hidden>
+      <h3 class="group-title">Updates</h3>
+      <div class="group">
+        <div class="row">
+          <div class="row-text"><div id="updateVersion">Online Search</div><div id="updateDetail" class="muted"></div></div>
+          <button id="updateButton" class="pill">Check for updates</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="clientIdSection">
+      <h3 class="group-title">Google Client ID</h3>
+      <div class="group">
+        <div class="row">
+          <input id="clientId" placeholder="…apps.googleusercontent.com" aria-label="OAuth Client ID">
+          <button id="saveClientId" class="pill">Save</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="about"><span id="aboutVersion"></span> · Percimoney Technologies</p>
+  </dialog>
+
+  <div id="player" class="player" hidden>
+    <div class="player-sheet glass-strong">
+      <div class="player-head">
+        <span id="playerName" class="player-name"></span>
+        <select id="playerQuality" class="quality" aria-label="Playback quality" title="Playback quality" hidden></select>
+        <button id="playerDrive" class="pill small" title="Open on drive.google.com">Open in Google Drive</button>
+        <button id="playerDownload" class="icon-btn round" title="Download" aria-label="Download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg></button>
+        <button id="closePlayer" class="icon-btn round" title="Close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="player-stage">
+        <video id="playerVideo" controls playsinline></video>
+        <img id="playerImage" alt="" referrerpolicy="no-referrer" hidden>
+        <button id="photoPrev" class="icon-btn round photo-nav prev" title="Previous photo (←)" aria-label="Previous photo" hidden></button>
+        <button id="photoNext" class="icon-btn round photo-nav next" title="Next photo (→)" aria-label="Next photo" hidden></button>
+        <div class="spinner" aria-hidden="true"></div>
+        <p id="playerMessage" class="player-message"></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

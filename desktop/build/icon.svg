@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8a3d"/>
+      <stop offset="1" stop-color="#e8571a"/>
+    </linearGradient>
+  </defs>
+  <!-- macOS icon grid: 824px body centred on a 1024px canvas -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  <circle cx="455" cy="455" r="205" fill="none" stroke="#fff" stroke-width="62"/>
+  <path d="M650 650 L770 770" stroke="#fff" stroke-width="78" stroke-linecap="round"/>
+  <path d="M410 370 L540 455 L410 540 Z" fill="#fff" stroke="#fff" stroke-width="24" stroke-linejoin="round"/>
+</svg>

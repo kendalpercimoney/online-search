@@ -1,0 +1,60 @@
+{
+  "name": "online-search",
+  "productName": "Online Search",
+  "version": "0.4.2",
+  "description": "Skim, hover-scrub and search video footage and photos stored in Google Drive.",
+  "author": "Percimoney Technologies",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kendalpercimoney/online-search.git"
+  },
+  "homepage": "https://github.com/kendalpercimoney/online-search",
+  "private": true,
+  "main": "desktop/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac dmg --arm64",
+    "release": "node scripts/release.mjs"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.1"
+  },
+  "build": {
+    "appId": "com.percimoney.onlinesearch",
+    "productName": "Online Search",
+    "copyright": "\u00a9 Percimoney Technologies",
+    "directories": {
+      "output": "dist",
+      "buildResources": "desktop/build"
+    },
+    "files": [
+      "desktop/main.js",
+      "desktop/auth.js",
+      "desktop/copies.js",
+      "desktop/updates.js",
+      "desktop/preload.js",
+      "desktop/config.json",
+      "desktop/build/icon.png",
+      "web/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.video",
+      "icon": "desktop/build/icon.icns",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "dmg": {
+      "title": "Online Search"
+    }
+  }
+}

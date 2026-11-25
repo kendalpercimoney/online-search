@@ -1,0 +1,7 @@
+.DS_Store
+# Generated test clip (recreate with ffmpeg, see README)
+test/
+node_modules/
+dist/
+# Google OAuth Desktop client for the Mac app (see desktop/config.example.json)
+desktop/config.json
