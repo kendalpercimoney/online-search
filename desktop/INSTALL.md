@@ -7,29 +7,36 @@ Online Search, by Percimoney Technologies, lets you browse, preview and search v
 1. Open the **Online Search** .dmg file you were sent.
 2. Drag **Online Search** into the **Applications** folder, then close the window.
 
-## 2. Open it the first time
+## 2. Let your Mac open it
 
-Online Search isn't registered with Apple yet, so macOS asks you to confirm the first time you open it. You only need to do this once.
+Online Search is made by **Kendal Percimoney** (Percimoney Technologies). It isn't registered with Apple, because that needs a paid Apple developer membership, so macOS blocks it the first time with a message such as "can't verify" or "can't be opened". You can trust it: it only talks to Google Drive with your own sign-in, and all of its code is public at [github.com/kendalpercimoney/online-search](https://github.com/kendalpercimoney/online-search) for anyone to check.
 
-1. Open **Online Search** from your Applications folder. macOS will say it can't verify the app. Click **Done**.
-2. Open **System Settings**, then **Privacy & Security**.
-3. Scroll down to the message about Online Search and click **Open Anyway**, then confirm with your password.
-4. Click **Open** when macOS asks again.
+To let your Mac open it, you only need to do this once:
 
-### If it still won't open
-
-If macOS says **"The application can't be opened"**, or that the app **"is damaged"**, or there's no **Open Anyway** button:
-
-1. Check **Apple menu → About This Mac**. The macOS version must be **13 (Ventura) or later**, and the chip must be **Apple M1 or newer**. If macOS is older, update it in **System Settings → General → Software Update** first.
-2. Make sure Online Search is in your **Applications** folder (not opened straight from the installer window), and that the installer has finished copying it.
-3. Open **Terminal** (in Applications → Utilities), paste this line and press Return:
+1. Make sure **Online Search** is in your **Applications** folder (step 1) and the copying has finished.
+2. Open **Terminal**. It's in **Applications → Utilities**, or press ⌘ Space, type `Terminal` and press Return.
+3. Copy this line, paste it into Terminal and press Return:
 
    ```bash
    xattr -cr "/Applications/Online Search.app"
    ```
 
-   This removes the "downloaded from the internet" mark macOS puts on the app, which is what's blocking it. It changes nothing else.
-4. Open Online Search from Applications again.
+   Terminal shows nothing back; that means it worked. The line removes the "downloaded from the internet" mark macOS puts on new apps, which is what triggers the block. It doesn't change the app or anything else on your Mac.
+4. Close Terminal and open **Online Search** from your Applications folder.
+
+Updates install themselves after this, so you won't need to do it again.
+
+### If you'd rather not use Terminal
+
+1. Open **Online Search** from Applications. When macOS says it can't verify the app, click **Done**.
+2. Open **System Settings → Privacy & Security**, scroll down to the message about Online Search, click **Open Anyway** and confirm with your password.
+3. Click **Open** when macOS asks again.
+
+On some Macs this isn't enough and macOS still says the app "can't be opened". If so, please use the Terminal steps above.
+
+### If it still won't open
+
+Check **Apple menu → About This Mac**: Online Search needs an **Apple M1 chip or newer** and **macOS 13 (Ventura) or later**. If macOS is older, update it in **System Settings → General → Software Update**, then try again.
 
 ## 3. Sign in with Google
 

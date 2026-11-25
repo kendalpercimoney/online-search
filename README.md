@@ -97,7 +97,7 @@ Or build a Mac app you can keep in Applications and share:
 npm run dist
 ```
 
-The installer appears in `dist/` as `Online Search-<version>-arm64.dmg`. It isn't signed with an Apple Developer certificate, so the first time it opens, macOS asks you to confirm in **System Settings → Privacy & Security → Open Anyway**. [desktop/INSTALL.md](desktop/INSTALL.md) is a step-by-step guide to send along with it.
+The installer appears in `dist/` as `Online Search-<version>-arm64.dmg`. It isn't signed with an Apple Developer certificate, so on other Macs, macOS blocks it the first time. One Terminal command, `xattr -cr "/Applications/Online Search.app"`, lets it open (or use **System Settings → Privacy & Security → Open Anyway**). [desktop/INSTALL.md](desktop/INSTALL.md) is a step-by-step guide to send along with it. Apps you build and run on your own Mac aren't blocked.
 
 ## 6. Using it
 
