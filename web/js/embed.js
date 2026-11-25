@@ -21,8 +21,20 @@ function call(op, payload, transfer = []) {
       if (m.type === 'progress') return reportProgress(m);
       const pending = calls.get(m.id);
       calls.delete(m.id);
+      if (!pending) return;
       if (m.error) pending.reject(new Error(m.error));
       else pending.resolve(m.vectors);
+    };
+    // If the worker crashes (for example out of memory), fail what was waiting on it and
+    // start a fresh one next time, rather than leaving searches and cataloguing hanging.
+    worker.onerror = (e) => {
+      e.preventDefault?.();
+      const err = new Error(`The search model stopped: ${e.message || 'unknown error'}`);
+      for (const pending of calls.values()) pending.reject(err);
+      calls.clear();
+      textCache.clear();
+      worker.terminate();
+      worker = null;
     };
   }
   return new Promise((resolve, reject) => {

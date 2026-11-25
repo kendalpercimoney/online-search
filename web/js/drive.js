@@ -92,7 +92,12 @@ export function folderMedia(folderId, { refresh = false } = {}) {
   if (!refresh && hit && Date.now() - hit.at < LISTING_TTL) return hit.promise;
   const promise = listMedia(`'${folderId}' in parents`).then((files) => new Map(files.map((f) => [f.id, f])));
   promise.catch(() => listings.delete(folderId));
+  listings.delete(folderId);
   listings.set(folderId, { at: Date.now(), promise });
+  // Drop listings that have gone stale, and keep at most 50, so a long session browsing
+  // many folders doesn't keep every folder's file list in memory.
+  for (const [id, l] of listings) if (Date.now() - l.at > LISTING_TTL && id !== folderId) listings.delete(id);
+  while (listings.size > 50) listings.delete(listings.keys().next().value);
   return promise;
 }
 
