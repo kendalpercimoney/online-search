@@ -1,7 +1,7 @@
 {
   "name": "online-search",
   "productName": "Online Search",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Skim, hover-scrub and search video footage and photos stored in Google Drive.",
   "author": "Percimoney Technologies",
   "license": "MIT",
@@ -24,7 +24,7 @@
   "build": {
     "appId": "com.percimoney.onlinesearch",
     "productName": "Online Search",
-    "copyright": "\u00a9 Percimoney Technologies",
+    "copyright": "© Percimoney Technologies",
     "directories": {
       "output": "dist",
       "buildResources": "desktop/build"

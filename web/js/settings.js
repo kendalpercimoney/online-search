@@ -10,7 +10,7 @@ import { $, bytes, el, plural } from './util.js';
 const MONTH = 30 * 86_400_000;
 const ASKED_KEY = 'os.cleanupAskedAt';
 
-export const APP_VERSION = desktop?.version || '0.4.2';
+export const APP_VERSION = desktop?.version || '0.4.3';
 
 function renderAccount() {
   const signedIn = !!validToken();
