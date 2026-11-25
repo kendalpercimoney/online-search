@@ -1,6 +1,6 @@
 # Installing Online Search
 
-Online Search, by Percimoney Technologies, lets you browse, preview and search video footage stored in your Google Drive. These steps take about two minutes. You need a Mac with Apple Silicon (M1 or newer).
+Online Search, by Percimoney Technologies, lets you browse, preview and search video footage stored in your Google Drive. These steps take about two minutes. You need a Mac with Apple Silicon (M1 or newer) running macOS 13 Ventura or later (Apple menu → About This Mac shows both).
 
 ## 1. Install the app
 
@@ -15,6 +15,21 @@ Online Search isn't registered with Apple yet, so macOS asks you to confirm the 
 2. Open **System Settings**, then **Privacy & Security**.
 3. Scroll down to the message about Online Search and click **Open Anyway**, then confirm with your password.
 4. Click **Open** when macOS asks again.
+
+### If it still won't open
+
+If macOS says **"The application can't be opened"**, or that the app **"is damaged"**, or there's no **Open Anyway** button:
+
+1. Check **Apple menu → About This Mac**. The macOS version must be **13 (Ventura) or later**, and the chip must be **Apple M1 or newer**. If macOS is older, update it in **System Settings → General → Software Update** first.
+2. Make sure Online Search is in your **Applications** folder (not opened straight from the installer window), and that the installer has finished copying it.
+3. Open **Terminal** (in Applications → Utilities), paste this line and press Return:
+
+   ```bash
+   xattr -cr "/Applications/Online Search.app"
+   ```
+
+   This removes the "downloaded from the internet" mark macOS puts on the app, which is what's blocking it. It changes nothing else.
+4. Open Online Search from Applications again.
 
 ## 3. Sign in with Google
 
